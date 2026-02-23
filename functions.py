@@ -25,3 +25,4 @@ def deleteTask(task):
     tasks = loadTasks()
     del tasks[task]
     saveTasks(tasks)
+    
