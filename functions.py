@@ -1,13 +1,27 @@
-tasks_list = {}
+import json
+
+def loadTasks():
+    with open("tasks.json", "r") as f:
+        return json.load(f)
+
+def saveTasks(tasks):
+    with open("tasks.json", "w") as f:
+        json.dump(tasks, f)
 
 def listTasks():
-    print(tasks_list)
+    print(loadTasks())
 
 def addTask(task):
-    tasks_list[task] = "pending"
+    tasks = loadTasks()
+    tasks[task] = "pending"
+    saveTasks(tasks)
 
 def doneTask(task):
-    tasks_list[task] = "done"
+    tasks = loadTasks()
+    tasks[task] = "done"
+    saveTasks(tasks)
     
 def deleteTask(task):
-    del tasks_list[task]
+    tasks = loadTasks()
+    del tasks[task]
+    saveTasks(tasks)
