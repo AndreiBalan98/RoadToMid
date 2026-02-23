@@ -1,24 +1,68 @@
+from http.server import HTTPServer, BaseHTTPRequestHandler
 import functions
+import json
 
-print("Hi, I'm Nanny, I'm here to help you organize!")
-print("(list - for listing tasks)")
-print("(add <task> - for adding a task)")
-print("(done <task> - for setting a task as done)")
-print("(delete <task> - to deleting a task)")
-print("(exit - to exit program)\n")
+class Handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        match self.path:
+            case "/health":
+                self.send_response(200)
+                self.end_headers()
+                self.wfile.write(b"Hi, I'm Nanny, I'm here to help you organize!\n(list - for listing tasks)\n(add <task> - for adding a task)\n(done <task> - for setting a task as done)\n(delete <task> - to deleting a task)\n(exit - to exit program)")
+            case "/list":
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json")
+                self.end_headers()
+                self.wfile.write(json.dumps(functions.loadTasks()).encode())
+            case _:
+                self.send_response(500)
+                self.end_headers()
+                self.wfile.write(b"Error: path not found")
+    def do_POST(self):
+        match self.path:
+            case "/add":
+                length = int(self.headers["Content-Length"])
+                task = self.rfile.read(length).decode()
+                
+                functions.addTask(task)
 
-while(True):
-    user_input = input()
+                self.send_response(200)
+                self.end_headers()
+                self.wfile.write(b"Succesfully added task!")
+            case _:
+                self.send_response(500)
+                self.end_headers()
+                self.wfile.write(b"Error: path not found")
+    def do_PATCH(self):
+        match self.path:
+            case "/done":
+                length = int(self.headers["Content-Length"])
+                task = self.rfile.read(length).decode()
+                
+                functions.doneTask(task)
 
-    if "list" in user_input:
-        functions.listTasks()
-    elif "add" in user_input:
-        functions.addTask(user_input[4:])
-    elif "done" in user_input:
-        functions.doneTask(user_input[5:])
-    elif "delete" in user_input:
-        functions.deleteTask(user_input[7:])
-    elif "exit" in user_input:
-        break
-    else: 
-        print("Please, try again.")
+                self.send_response(200)
+                self.end_headers()
+                self.wfile.write(b"Succesfully doned task!")
+            case _:
+                self.send_response(500)
+                self.end_headers()
+                self.wfile.write(b"Error: path not found")
+    def do_DELETE(self):
+        match self.path:
+            case "/delete":
+                length = int(self.headers["Content-Length"])
+                task = self.rfile.read(length).decode()
+                
+                functions.deleteTask(task)
+
+                self.send_response(200)
+                self.end_headers()
+                self.wfile.write(b"Succesfully deleted task!")
+            case _:
+                self.send_response(500)
+                self.end_headers()
+                self.wfile.write(b"Error: path not found")
+
+server = HTTPServer(("localhost", 6969), Handler)
+server.serve_forever()
