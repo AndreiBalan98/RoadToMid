@@ -9,7 +9,7 @@ def saveTasks(tasks):
         json.dump(tasks, f)
 
 def listTasks():
-    print(loadTasks())
+    return loadTasks()
 
 def addTask(task):
     tasks = loadTasks()
