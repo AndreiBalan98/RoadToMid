@@ -1,24 +1,16 @@
-import functions
+from http.server import HTTPServer, BaseHTTPRequestHandler
 
-print("Hi, I'm Nanny, I'm here to help you organize!")
-print("(list - for listing tasks)")
-print("(add <task> - for adding a task)")
-print("(done <task> - for setting a task as done)")
-print("(delete <task> - to deleting a task)")
-print("(exit - to exit program)\n")
+class Handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        match self.path:
+            case "/health":
+                self.send_response(200)
+                self.end_headers()
+                self.wfile.write(b"Hi, I'm Nanny, I'm here to help you organize!\n(list - for listing tasks)\n(add <task> - for adding a task)\n(done <task> - for setting a task as done)\n(delete <task> - to deleting a task)\n(exit - to exit program)")
+            case _:
+                self.send_response(500)
+                self.end_headers()
+                self.wfile.write(b"Error: path not found")
 
-while(True):
-    user_input = input()
-
-    if "list" in user_input:
-        functions.listTasks()
-    elif "add" in user_input:
-        functions.addTask(user_input[4:])
-    elif "done" in user_input:
-        functions.doneTask(user_input[5:])
-    elif "delete" in user_input:
-        functions.deleteTask(user_input[7:])
-    elif "exit" in user_input:
-        break
-    else: 
-        print("Please, try again.")
+server = HTTPServer(("localhost", 8080), Handler)
+server.serve_forever()
