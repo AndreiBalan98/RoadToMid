@@ -13,7 +13,7 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_response(200)
                 self.send_header("Content-Type", "application/json")
                 self.end_headers()
-                self.wfile.write(json.dump(functions.loadTasks()).encode())
+                self.wfile.write(json.dumps(functions.loadTasks()).encode())
             case _:
                 self.send_response(500)
                 self.end_headers()
