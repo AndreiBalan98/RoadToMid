@@ -15,11 +15,14 @@ def getTasks():
 @app.post("/add")
 def addTask(task: str = Body()):
     functions.addTask(task)
+    return "Succesfully added task!"
 
 @app.patch("/done")
 def doneTask(task: str = Body()):
     functions.doneTask(task)
+    return "Succesfully doned task!"
 
 @app.delete("/delete")
 def deleteTask(task: str = Body()):
     functions.deleteTask(task)
+    return "Succesfully deleted task!"
