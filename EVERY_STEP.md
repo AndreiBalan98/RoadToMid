@@ -10,3 +10,5 @@ created tasks.json for persistance
 created a server with HTTPServer
 handler using BaseHTTPRequestHandler
 wrote routes for every function
+
+# 3. FastAPI Server

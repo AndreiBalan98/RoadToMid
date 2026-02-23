@@ -1,28 +1,29 @@
-from fastapi import FastAPI, Body
+from fastapi import FastAPI
+from schemas import TextMessage, TasksList, Task
 import functions
 import json
 
 app = FastAPI()
 
-@app.get("/health")
+@app.get("/health", response_model=TextMessage)
 def healthCheck():
-    return "Hi, I'm Nanny, I'm here to help you organize!\n(list - for listing tasks)\n(add <task> - for adding a task)\n(done <task> - for setting a task as done)\n(delete <task> - to deleting a task)\n(exit - to exit program)"
+    return {"message" : "Hi, I'm Nanny, I'm here to help you organize!\n(list - for listing tasks)\n(add <task> - for adding a task)\n(done <task> - for setting a task as done)\n(delete <task> - to deleting a task)\n(exit - to exit program)"}
 
-@app.get("/list")
+@app.get("/list", response_model=TasksList)
 def getTasks():
     return functions.listTasks()
 
-@app.post("/add")
-def addTask(task: str = Body()):
-    functions.addTask(task)
-    return "Succesfully added task!"
+@app.post("/add", response_model=TextMessage)
+def addTask(task: Task):
+    functions.addTask(task.task)
+    return {"message" : "Succesfully added task!"}
 
-@app.patch("/done")
-def doneTask(task: str = Body()):
-    functions.doneTask(task)
-    return "Succesfully doned task!"
+@app.patch("/done", response_model=TextMessage)
+def doneTask(task: Task):
+    functions.doneTask(task.task)
+    return {"message" : "Succesfully doned task!"}
 
-@app.delete("/delete")
-def deleteTask(task: str = Body()):
-    functions.deleteTask(task)
-    return "Succesfully deleted task!"
+@app.delete("/delete", response_model=TextMessage)
+def deleteTask(task: Task):
+    functions.deleteTask(task.task)
+    return {"message" : "Succesfully deleted task!"}
