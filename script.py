@@ -18,6 +18,51 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_response(500)
                 self.end_headers()
                 self.wfile.write(b"Error: path not found")
+    def do_POST(self):
+        match self.path:
+            case "/add":
+                lenght = int(self.headers["Content-Lenght"])
+                task = self.rfile.read(lenght).decode()
+                
+                functions.addTask(task)
+
+                self.send_response(200)
+                self.end_headers()
+                self.wfile.write(b"Succesfully added task!")
+            case _:
+                self.send_response(500)
+                self.end_headers()
+                self.wfile.write(b"Error: path not found")
+    def do_PATCH(self):
+        match self.path:
+            case "/done":
+                lenght = int(self.headers["Content-Lenght"])
+                task = self.rfile.read(lenght).decode()
+                
+                functions.doneTask(task)
+
+                self.send_response(200)
+                self.end_headers()
+                self.wfile.write(b"Succesfully doned task!")
+            case _:
+                self.send_response(500)
+                self.end_headers()
+                self.wfile.write(b"Error: path not found")
+    def do_DELETE(self):
+        match self.path:
+            case "/delete":
+                lenght = int(self.headers["Content-Lenght"])
+                task = self.rfile.read(lenght).decode()
+                
+                functions.deleteTask(task)
+
+                self.send_response(200)
+                self.end_headers()
+                self.wfile.write(b"Succesfully deleted task!")
+            case _:
+                self.send_response(500)
+                self.end_headers()
+                self.wfile.write(b"Error: path not found")
 
 server = HTTPServer(("localhost", 6969), Handler)
 server.serve_forever()
