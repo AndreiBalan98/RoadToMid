@@ -21,8 +21,8 @@ class Handler(BaseHTTPRequestHandler):
     def do_POST(self):
         match self.path:
             case "/add":
-                lenght = int(self.headers["Content-Lenght"])
-                task = self.rfile.read(lenght).decode()
+                length = int(self.headers["Content-Length"])
+                task = self.rfile.read(length).decode()
                 
                 functions.addTask(task)
 
@@ -36,8 +36,8 @@ class Handler(BaseHTTPRequestHandler):
     def do_PATCH(self):
         match self.path:
             case "/done":
-                lenght = int(self.headers["Content-Lenght"])
-                task = self.rfile.read(lenght).decode()
+                length = int(self.headers["Content-Length"])
+                task = self.rfile.read(length).decode()
                 
                 functions.doneTask(task)
 
@@ -51,8 +51,8 @@ class Handler(BaseHTTPRequestHandler):
     def do_DELETE(self):
         match self.path:
             case "/delete":
-                lenght = int(self.headers["Content-Lenght"])
-                task = self.rfile.read(lenght).decode()
+                length = int(self.headers["Content-Length"])
+                task = self.rfile.read(length).decode()
                 
                 functions.deleteTask(task)
 
