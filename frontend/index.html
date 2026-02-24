@@ -1,18 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bg-gray-100">
 <head>
     <meta charset="UTF-8">
     <title>Tasks manager</title>
-    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div id="message">Hello!</div>
+<body class="flex flex-col h-screen max-w-xl mx-auto bg-white shadow-lg text-gray-800">
 
-    <ul id="task-list"></ul>
+    <div id="message" class="py-5 px-6 text-center text-base font-semibold text-blue-500 border-b border-gray-100">
+        Hello!
+    </div>
 
-    <div id="add-task">
-        <input type="text" id="new-task" placeholder="Task nou...">
-        <button onclick="add(this)">Add</button>
+    <ul id="task-list" class="flex-1 overflow-y-auto py-2 px-6 list-none"></ul>
+
+    <div id="add-task" class="flex gap-2 px-6 py-4 border-t border-gray-100 bg-white">
+        <input type="text" id="new-task" placeholder="Task nou..."
+            class="flex-1 px-3 py-2 border border-gray-300 rounded-md text-sm outline-none focus:border-blue-400 transition-colors">
+        <button onclick="add(this)"
+            class="px-4 py-2 bg-blue-500 text-white rounded-md text-sm cursor-pointer hover:bg-blue-600 transition-colors">
+            Add
+        </button>
     </div>
 
     <script src="script.js"></script>
