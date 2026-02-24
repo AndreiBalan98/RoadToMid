@@ -12,3 +12,9 @@ handler using BaseHTTPRequestHandler
 wrote routes for every function
 
 # 3. FastAPI Server
+used decorators, handlers
+pydantinc models
+swagger docs and redoc
+pytests
+
+# 4. Simple Frontend
