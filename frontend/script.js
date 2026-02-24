@@ -27,8 +27,19 @@ async function loadTasks() {
     ul.innerHTML = ""
 
     Object.entries(tasks).forEach(([task,state]) => {
+        const isDone = state === "done"
         li = document.createElement("li")
-        li.innerHTML = `<span>${task}</span><button onclick='done(this)'>Done</button><button onclick='remove(this)'>Delete</button>`
+        li.className = `flex items-center gap-2.5 py-3.5 border-b border-gray-100 last:border-b-0${isDone ? " bg-green-50" : ""}`
+
+        const spanClass = isDone
+            ? "flex-1 text-sm line-through text-green-600"
+            : "flex-1 text-sm"
+
+        li.innerHTML = `
+            <span class="${spanClass}">${task}</span>
+            <button onclick='done(this)' class="px-3 py-1 border border-green-500 rounded text-green-500 text-xs cursor-pointer hover:bg-green-500 hover:text-white transition-colors">Done</button>
+            <button onclick='remove(this)' class="px-3 py-1 border border-red-500 rounded text-red-500 text-xs cursor-pointer hover:bg-red-500 hover:text-white transition-colors">Delete</button>
+        `
 
         ul.appendChild(li)
     })
