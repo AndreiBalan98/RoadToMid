@@ -1,13 +1,21 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from schemas import TextMessage, TasksList, Task
 import functions
 import json
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 @app.get("/health", response_model=TextMessage)
 def healthCheck():
-    return {"message" : "Hi, I'm Nanny, I'm here to help you organize!\n(list - for listing tasks)\n(add <task> - for adding a task)\n(done <task> - for setting a task as done)\n(delete <task> - to deleting a task)\n(exit - to exit program)"}
+    return {"message" : "Hi, I'm Nanny, I'm here to help you organize!"}
 
 @app.get("/list", response_model=TasksList)
 def getTasks():
