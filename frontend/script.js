@@ -29,6 +29,7 @@ async function loadTasks() {
     Object.entries(tasks).forEach(([task,state]) => {
         li = document.createElement("li")
         li.innerHTML = `<span>${task}</span><button onclick='done(this)'>Done</button><button onclick='remove(this)'>Delete</button>`
+        if (state === "done") li.classList.add("done")
 
         ul.appendChild(li)
     })
