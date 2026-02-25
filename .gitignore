@@ -3,4 +3,4 @@ backend/__pycache__/
 backend/venv/
 backend/.pytest_cache/
 
-frontend/node_modules/
+old_frontend/node_modules/
