@@ -24,8 +24,10 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <div>{message}</div>
+    <div className="flex flex-col h-screen max-w-xl mx-auto bg-white shadow-lg text-gray-800">
+      <div className="py-5 px-6 text-center text-base font-semibold text-blue-500 border-b border-gray-100">
+        {message}
+      </div>
       <TaskList tasks={tasks} fetchTasks={fetchTasks} />
       <AddTask fetchTasks={fetchTasks} />
     </div>

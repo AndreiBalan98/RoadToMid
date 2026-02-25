@@ -14,9 +14,16 @@ function AddTask({ fetchTasks }: { fetchTasks: () => void }) {
   }
 
   return (
-    <div>
-      <input value={value} onChange={e => setValue(e.target.value)} placeholder="Task nou..." />
-      <button onClick={add}>Add</button>
+    <div className="flex gap-2 px-6 py-4 border-t border-gray-100 bg-white">
+      <input
+        value={value}
+        onChange={e => setValue(e.target.value)}
+        placeholder="Task nou..."
+        className="flex-1 px-3 py-2 border border-gray-300 rounded-md text-sm outline-none focus:border-blue-400 transition-colors"
+      />
+      <button onClick={add} className="px-4 py-2 bg-blue-500 text-white rounded-md text-sm cursor-pointer hover:bg-blue-600 transition-colors">
+        Add
+      </button>
     </div>
   );
 }
